@@ -1,3 +1,6 @@
+# Le module random est importé pour mélanger le deck
+import random
+
 class Cartes():
     # Constructeur pour les cartes, le chiffre est un str puisqu'il doit accepter J Q K
     def __init__(self, chiffre:str, couleur:str):
@@ -6,7 +9,7 @@ class Cartes():
     
     # Getter pour retourner la valeur de la carte dans le jeu, les figures valent 10 donc on retourne 10
     def getValeur(self):
-        if self.__chiffre == "J" or "Q" or "K":
+        if self.__chiffre in ("J", "Q", "K"):
             return 10
         elif self.__chiffre == "A":
             return 11
@@ -20,6 +23,23 @@ class Cartes():
     def getCouleur(self):
         return self.__couleur
     
+     # Affichage pour représenter le deck (sert pour tester si le programme fonnctionne)
+    def __repr__(self):
+        return f"{self.__chiffre} de {self.__couleur}"
+    
+    # Création d'un deck de 52 cartes
+    @staticmethod
+    def creer_deck():
+        # Rassemble toutes les cartes déjà créées
+        toutes_les_cartes = [
+            HA,H2,H3,H4,H5,H6,H7,H8,H9,H10,HJ,HQ,HK,
+            DA,D2,D3,D4,D5,D6,D7,D8,D9,D10,DJ,DQ,DK,
+            SA,S2,S3,S4,S5,S6,S7,S8,S9,S10,SJ,SQ,SK,
+            CA,C2,C3,C4,C5,C6,C7,C8,C9,C10,CJ,CQ,CK
+        ]
+        random.shuffle(toutes_les_cartes)
+        return toutes_les_cartes
+
 
 # Initialisation de toutes les cartes
 
@@ -82,3 +102,9 @@ C10:Cartes = Cartes("10", "Trefle")
 CJ:Cartes = Cartes("J", "Trefle")
 CQ:Cartes = Cartes("Q", "Trefle")
 CK:Cartes = Cartes("K", "Trefle")
+
+
+# Test pour voir si le deck est bien créé
+deck = Cartes.creer_deck()
+print(deck)
+
