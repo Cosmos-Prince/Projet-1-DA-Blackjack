@@ -105,6 +105,9 @@ CK:Cartes = Cartes("K", "Trefle")
 
 
 # Test pour voir si le deck est bien créé
-deck = Cartes.creer_deck()
-print(deck)
+# if __name__ == "__main__" empêche l'exécution du code lors de l'importation du module dans un autre 
+# fichier
+if __name__ == "__main__":
+    deck = Cartes.creer_deck()
+    print(deck)
 

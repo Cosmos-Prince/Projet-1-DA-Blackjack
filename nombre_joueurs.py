@@ -14,5 +14,9 @@ def demander_nb_joueurs():
 
 
 # Exemple pour tester la fonction
-nb_joueurs = demander_nb_joueurs()
-print(f"Nombre de joueurs : {nb_joueurs}")
+
+# if __name__ == "__main__" empêche l'exécution du code lors de l'importation du module dans un autre 
+# fichier
+if __name__ == "__main__":
+    nb_joueurs = demander_nb_joueurs()
+    print(f"Nombre de joueurs : {nb_joueurs}")
