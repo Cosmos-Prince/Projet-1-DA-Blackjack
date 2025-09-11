@@ -1,0 +1,39 @@
+import tkinter as tk
+
+# Initialisation de la fenêtre
+fenetre = tk.Tk()
+
+# Titre de la fenêtre
+fenetre.title("Black Jack")
+
+# Taille de la fenêtre
+largeur= fenetre.winfo_screenwidth()               
+hauteur= fenetre.winfo_screenheight()
+fenetre.geometry("%dx%d" %(largeur, hauteur))
+
+# Définir la couleur de fond en vert
+fenetre.configure(bg="#085b18")
+
+# Création d'une première Frame qui va faire la bordure
+frameBordure = tk.Frame(fenetre, bg="#5d5103", width=(largeur - 100), height=(hauteur - 150))
+frameBordure.place(x=50, y=50)
+
+# Création du frame principal pour le jeu
+frameJeu = tk.Frame(frameBordure, bg="#0b7821", width=(largeur - 150), height=(hauteur - 200))
+frameJeu.place(x=25, y=25)
+
+# Création du frame du titre
+frameTitre = tk.Frame(frameJeu, bg="#0b7821", padx=20, pady=20, height=100, width=(largeur - 150))
+tk.Label(frameTitre, text="Black Jack", font=('Algerian', 20), fg='#7cff85')
+frameTitre.grid(row=1, column=1, padx=5, pady=5)
+
+# Ajouter un titre dans le haut
+#titre_label = tk.Label(haut_frame, text="Black Jack", font=("Arial", 24, "bold"), bg="white", fg="black")
+#titre_label.pack(pady=20)
+
+# Affichage du titre Black Jack sur la page
+
+
+
+
+fenetre.mainloop()
