@@ -24,31 +24,49 @@ frameJeu.place(x=25, y=25)
 
 # Création du frame du titre
 frameTitre = tk.Frame(frameJeu, bg="#0b7821", padx=20, pady=20, height=100, width=(largeur - 150))
-tk.Label(frameTitre, text="Black Jack", font=('Algerian', 20), fg='#7cff85')
 frameTitre.place(x=0, y=0)
 
 # Ajouter un titre dans le haut
-titre_label = tk.Label(frameTitre, text="Black Jack", font=("Arial", 24, "bold"), bg="white", fg="black")
+titre_label = tk.Label(frameTitre, text="Black Jack", font=("Algerian", 24),bg="#0b7821", fg="#7cff85")
 titre_label.place(relx=0.5, rely=0.2, anchor="center")  # Centré en haut
 
 # Création d'une frame pour le dealer
-frameDealer = tk.Frame(frameJeu, bg="#ffffff", padx=20, pady=20, height=400, width=(largeur - 150))
+frameDealer = tk.Frame(frameJeu, bg="#ffffff", height=400, width=(largeur - 150))
 frameDealer.place(x=0, y=50)
+
+# Frame pour afficher le total des victoires du dealer & du joueur
+frameScoreTotal = tk.Frame(frameDealer, bg="#ff0000", padx=20, pady=20, height=400, width=250)
+frameScoreTotal.place(relx=0.87, y=0)
 
 # Création d'une frame pour les boutons
 frameBoutons = tk.Frame(frameJeu, bg="#0400ff", padx=20, pady=20, height=100, width=(largeur - 150))
 frameBoutons.place(x=0, y=450)
 
 # Création d'une frame pour le joueur
-frameJoueur = tk.Frame(frameJeu, bg="#ffffff", padx=20, pady=20, height=400, width=(largeur - 150))
+frameJoueur = tk.Frame(frameJeu, bg="#ffffff", height=400, width=(largeur - 150))
 frameJoueur.place(x=0, y=525)
 
 # Création du bouton tirer une carte (dans frameBoutons)
-bouton_tirer = tk.Button(frameBoutons, text="Tirer une carte", font=("Arial", 16), bg="#4CAF50", fg="white", padx=10, pady=5)
-bouton_tirer.place(relx=0.4, rely=0.5, anchor="center")  # Centré verticalement et à gauche
+bouton_tirer = tk.Button(frameBoutons, text="Tirer", font=("Arial", 16), bg="#4CAF50", fg="white", padx=10, pady=5)
+bouton_tirer.place(relx=0.45, rely=0.3, anchor="center")  # Centré verticalement et à gauche
 
 # Création du bouton rester (dans frameBoutons)
 bouton_rester = tk.Button(frameBoutons, text="Rester", font=("Arial", 16), bg="#f44336", fg="white", padx=10, pady=5)
-bouton_rester.place(relx=0.6, rely=0.5, anchor="center")  # Centré verticalement et à droite
+bouton_rester.place(relx=0.55, rely=0.3, anchor="center")  # Centré verticalement et à droite
+
+# Frame pour afficher le score du joueur
+frameScoreMainJoueur = tk.Frame(frameJoueur, bg="#ff0000", padx=20, pady=20, height=400, width=250)
+frameScoreMainJoueur.place(relx=0.87, y=0)
+
+# Label pour afficher le score de la main du joueur
+scoreMainJoueurLabel = tk.Label(frameScoreMainJoueur, text="Score: 0", font=("Arial", 16), bg="#ff0000", fg="white")
+scoreMainJoueurLabel.place(relx=0.5, rely=0.5, anchor="center")
+
+
+
+
+
+
 
 fenetre.mainloop()
+
