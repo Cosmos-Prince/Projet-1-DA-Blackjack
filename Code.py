@@ -13,11 +13,32 @@ def valeur_cartes(carte):
         return int(carte[0])
 #Mélange des cartes avec .pop pour pas réutiliser les cartes
 random.shuffle(deck)
-carte_jouer = [deck.pop() , deck.pop()]
+carte_joueur = [deck.pop() , deck.pop()]
 carte_croupier = [deck.pop() , deck.pop()]
 #Calcul de la valeur des carte pour le croupier et joueur
+
 while True:
-    score_jouer = sum(carte_jouer(carte) for carte in carte_jouer)
-    carte_croupier = sum(carte_jouer(carte) for carte in carte_croupier)
+    score_joueur = sum(valeur_cartes(carte) for carte in carte_joueur)
+    carte_croupier = sum(valeur_cartes(carte) for carte in carte_croupier)
+    print("Carte au joueur:", score_joueur)
+    print("Carte_croupier:", carte_croupier)
+    print("\n")
+    choice = input('What do you want? ["play" to resquest another card, "stop" to stop]:').lower()
+    if choice == "play":
+        new_card = deck.pop()
+        score_joueur.append(new_card)
+    elif choice == "stop":
+        break
+    else:
+        print("Invalid choice. Please try again.")
+        continue
+
+    if score_joueur > 21:
+        print("Cards Dealer Has:", carte_croupier)
+        print("S")
 
 
+
+
+
+# %%
