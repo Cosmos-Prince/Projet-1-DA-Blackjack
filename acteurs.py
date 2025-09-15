@@ -1,7 +1,6 @@
 # Importer le module cards pour accéder aux cartes (deck et Cartes)
 import cards
 
-
 # Créer une classe Acteur
 class Acteur:
     def __init__(self, nom):

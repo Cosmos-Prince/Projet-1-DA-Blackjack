@@ -1,5 +1,6 @@
 # Demander le nombre de joueurs
 
+
 def demander_nb_joueurs():
     while True:
         try:
