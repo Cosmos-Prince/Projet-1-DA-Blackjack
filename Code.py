@@ -1,8 +1,10 @@
+#%%
 import random
 #cartes
 Synbole_Cartes= ['coeur', 'Diamant', 'trefle', 'Pique'] 
-liste_Carte= ['A', '2', '3', '4', '5', '6','7','8','9', '10', 'J', 'Q', 'K']
+liste_Carte= ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
 deck = [(card, category) for category in Synbole_Cartes for card in liste_Carte]
+
 #Mise en valeur des cartes 
 def valeur_cartes(carte):
     if carte[0] in ['J' , 'Q ', 'K']:
@@ -16,26 +18,30 @@ random.shuffle(deck)
 carte_joueur = [deck.pop() , deck.pop()]
 carte_croupier = [deck.pop() , deck.pop()]
 #Calcul de la valeur des carte pour le croupier et joueur
-
+#Calcul du score du joueur et croupier et début du code pour déternminer le gagnant
 while True:
     score_joueur = sum(valeur_cartes(carte) for carte in carte_joueur)
-    carte_croupier = sum(valeur_cartes(carte) for carte in carte_croupier)
-    print("Carte au joueur:", score_joueur)
+    score_croupier = sum(valeur_cartes(carte) for carte in carte_croupier)
+    print("Carte au joueur:", carte_joueur)
     print("Carte_croupier:", carte_croupier)
     print("\n")
-    choice = input('What do you want? ["play" to resquest another card, "stop" to stop]:').lower()
-    if choice == "play":
-        new_card = deck.pop()
-        score_joueur.append(new_card)
-    elif choice == "stop":
+    Choix = input(' "jouer" pour continuer, "stop" pour arreter]:').lower()
+    if Choix == "jouer":
+        nouvelle_cartes = deck.pop()
+        carte_joueur.append(nouvelle_cartes)
+    elif Choix == "stop":
         break
     else:
-        print("Invalid choice. Please try again.")
+        print("Choix invalide, veuillez réessayer")
         continue
 
     if score_joueur > 21:
-        print("Cards Dealer Has:", carte_croupier)
-        print("S")
+        print("Cartes du croupier", carte_croupier)
+        print("Score du croupier", score_croupier)
+        print("Cartes du jouer:", carte_joueur)
+        print("Score du jouer:", score_joueur)
+        print("Croupier gagnant (valeurs des cartes > 21:)")
+        break
 
 
 
