@@ -43,6 +43,13 @@ while True:
         print("Score du jouer:", score_joueur)
         print("Croupier gagnant (valeurs des cartes > 21:)")
         break
+    #après le tour de joueur, calcul du score pour le scroupier pour voir s'il est > 17 sinon on ajoute des cartes
+    if score_croupier < 17:
+        nouvelle_cartes = deck.pop()
+        carte_croupier.append(nouvelle_cartes)
+        score_croupier += valeur_cartes(nouvelle_cartes)
+
+    
 
 
 
