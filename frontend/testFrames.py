@@ -1,5 +1,6 @@
 import tkinter as tk
 import affichageCartes as ac
+from tkinter import PhotoImage
 
 # Initialisation de la fenêtre
 fenetre = tk.Tk()
@@ -162,7 +163,7 @@ carteJ4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 frameJetons = tk.Frame(frameDealer, bg="#ffff00", padx=20, pady=20, height=400, width=700)
 frameJetons.place(relx=0.642, y=0) # <-- Modifié pour être plus à droite
 
-image = tk.PhotoImage(file="image/jetons.png")
+image = PhotoImage(file="frontend/jetons.png")
 label_image = tk.Label(frameJetons, image=image)
 label_image.image = image  # Nécessaire pour éviter que l'image soit supprimée par le garbage collector
 label_image.place(x=100, y=100)
