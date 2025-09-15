@@ -35,8 +35,24 @@ frameDealer = tk.Frame(frameJeu, bg="#ffffff", height=400, width=(largeur - 150)
 frameDealer.place(x=0, y=50)
 
 # Frame pour afficher le total des victoires du dealer & du joueur
-frameScoreTotal = tk.Frame(frameDealer, bg="#ff0000", padx=20, pady=20, height=400, width=250)
-frameScoreTotal.place(relx=0.87, y=0)
+frameScoreTotal = tk.Frame(frameDealer, bg="#ff0000", padx=20, pady=20, height=400, width=400)
+frameScoreTotal.place(relx=0, y=0)  # <-- Modifié pour être plus à gauche
+
+# Label pour afficher le score total du dealer
+scoreTotalDealerLabel = tk.Label(frameScoreTotal, text="Victoires totales Dealer: 0", font=("Arial", 16), bg="#ff0000", fg="white")
+scoreTotalDealerLabel.place(relx=0.5, rely=0.3, anchor="center")  # Centré
+
+# Label pour afficher le score total du joueur
+scoreTotalJoueurLabel = tk.Label(frameScoreTotal, text="Victoires totales Joueur: 0", font=("Arial", 16), bg="#ff0000", fg="white")
+scoreTotalJoueurLabel.place(relx=0.5, rely=0.7, anchor="center")  # Centré
+
+# Frame pour les cartes du dealer
+frameCartesDealer = tk.Frame(frameDealer, bg="#00ff00", padx=20, pady=20, height=400, width=500)
+frameCartesDealer.place(relx=0.36, y=0)  # Centré horizontalement
+
+# Label pour indiquer le tour au joueur
+tour_label = tk.Label(frameJeu, text="À votre tour : Tirer ou rester!", font=("Arial", 20), bg="#0b7821", fg="#ffffff")
+tour_label.place(relx=0.5, y=75, anchor="center")  # Centré horizontalement
 
 # Création d'une frame pour les boutons
 frameBoutons = tk.Frame(frameJeu, bg="#0400ff", padx=20, pady=20, height=100, width=(largeur - 150))
@@ -61,6 +77,12 @@ frameScoreMainJoueur.place(relx=0.87, y=0)
 # Label pour afficher le score de la main du joueur
 scoreMainJoueurLabel = tk.Label(frameScoreMainJoueur, text="Score: 0", font=("Arial", 16), bg="#ff0000", fg="white")
 scoreMainJoueurLabel.place(relx=0.5, rely=0.5, anchor="center")
+
+# Frame pour les cartes du joueur
+frameCartesJoueur = tk.Frame(frameJoueur, bg="#00ff00", padx=20, pady=20, height=400, width=500)
+frameCartesJoueur.place(relx=0.36, y=0)  # Centré horizontalement
+
+
 
 
 
