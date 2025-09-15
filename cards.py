@@ -1,6 +1,7 @@
 # Le module random est importé pour mélanger le deck
 import random
 
+
 class Cartes():
     # Constructeur pour les cartes, le chiffre est un str puisqu'il doit accepter J Q K
     def __init__(self, chiffre:str, couleur:str):
