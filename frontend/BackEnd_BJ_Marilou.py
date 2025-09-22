@@ -5,7 +5,8 @@
 # Le module random est importé pour mélanger le deck
 import random
 import tkinter as tk
-import page_de_jeu as pg
+
+pg = None  # Sera passé dynamiquement par le frontend
 
 class Cartes:
     # Constructeur pour les cartes, le chiffre est un str puisqu'il doit accepter J Q K
@@ -258,6 +259,7 @@ def tour_croupier(croupier, deck):
 def gerer_les_tours():
     # Création du deck
     deck = creer_deck()
+
     # Création du joueur unique
     joueur = Joueur("Joueur 1")
 
@@ -303,7 +305,7 @@ def gerer_les_tours():
     symbole_var.set(symbole)
     couleur_var.set(couleur)
 
-    pg.carte_joueur(2, chiffre, couleur, symbole)
+    pg.carte_joueur(1, chiffre, couleur, symbole)
 
 
 
@@ -384,10 +386,10 @@ def gerer_les_tours():
 
     pg.carte_dealer(2, chiffre, couleur, symbole)
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     # Mainloop de la fenêtre Tkinter
-    gerer_les_tours()
-    pg.fenetre.mainloop()
+#    gerer_les_tours()
+#    pg.fenetre.mainloop()
 
     # Affichage de la première carte du joueur
     # print(joueur.afficher_premier_carte())  # joueur est maintenant local à gerer_les_tours

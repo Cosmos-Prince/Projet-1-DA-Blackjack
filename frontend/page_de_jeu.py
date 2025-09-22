@@ -118,25 +118,25 @@ def carte_dealer(numero_carte, chiffre,couleur,symbole):
 
 
 # Outline de la 2eme carte dealer, face cachée
-carte2 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
-carte2.place(x=100, y=50)
+#carte2 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+#carte2.place(x=100, y=50)
 
 # Optionnel : ajouter du texte ou un symbole sur la 2ème carte
-carte2.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+#carte2.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 # Outline de la 3ème carte dealer, superposée
-carte3 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
-carte3.place(x=150, y=50)  # Ajuste x et y pour la position voulue
+#carte3 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+#carte3.place(x=150, y=50)  # Ajuste x et y pour la position voulue
 
 # Optionnel : ajouter du texte ou un symbole sur la 3ème carte
-carte3.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+#carte3.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 # Outline de la 4eme carte dealer
-carte4 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
-carte4.place(x=200, y=50)
+#carte4 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+#carte4.place(x=200, y=50)
 
 # Optionnel : ajouter du texte ou un symbole sur la 4ème carte
-carte4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+#carte4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 #-------------------------------------------------------------- Cartes du joueur --------------------------------------------------------------#
 
@@ -154,33 +154,34 @@ def carte_joueur(numero_carte, chiffre, couleur, symbole):
 
 
 # Outline de la 2eme carte dealer, face cachée
-carteJ2 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
-carteJ2.place(x=100, y=5)
+#carteJ2 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+#carteJ2.place(x=100, y=5)
 
 # Optionnel : ajouter du texte ou un symbole sur la 2ème carte
-carteJ2.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+#carteJ2.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 # Outline de la 3ème carte dealer, superposée
-carteJ3 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
-carteJ3.place(x=150, y=5)  # Ajuste x et y pour la position voulue
+#carteJ3 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+#carteJ3.place(x=150, y=5)  # Ajuste x et y pour la position voulue
 
 # Optionnel : ajouter du texte ou un symbole sur la 3ème carte
-carteJ3.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+#carteJ3.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 # Outline de la 4eme carte dealer
-carteJ4 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
-carteJ4.place(x=200, y=5)
+#carteJ4 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+#carteJ4.place(x=200, y=5)
 
 # Optionnel : ajouter du texte ou un symbole sur la 4ème carte
-carteJ4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+#carteJ4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 #------------------------------------------------------------- Début de l'intégration du BackEnd --------------------------------------------------------------#
 
 # Démarrer le jeu en appelant la fonction du backend
-#be.demarrer_jeu()
+def demarrer_jeu():
+    be.gerer_les_tours()
 
-# Affichage de la première carte du joueur
-
+bouton_demarrer = tk.Button(frameBoutons, text="Démarrer la partie", font=("Arial", 16), bg="#2196F3", fg="white", command=demarrer_jeu)
+bouton_demarrer.place(relx=0.5, rely=0.7, anchor="center")
 
 # Lancement de la boucle principale de la fenêtre
 fenetre.mainloop()
