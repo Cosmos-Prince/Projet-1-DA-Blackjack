@@ -70,12 +70,20 @@ frameBoutons.place(x=0, y=450)
 frameJoueur = tk.Frame(frameJeu, bg="#ffffff", height=400, width=(largeur - 150))
 frameJoueur.place(x=0, y=525)
 
+choix_joueur = tk.StringVar(value="")  # Variable pour stocker le choix
+
+def choisir_tirer():
+    choix_joueur.set("tirer")
+
+def choisir_rester():
+    choix_joueur.set("rester")
+
 # Création du bouton tirer une carte (dans frameBoutons)
-bouton_tirer = tk.Button(frameBoutons, text="Tirer", font=("Arial", 16), bg="#4CAF50", fg="white", padx=10, pady=5)
+bouton_tirer = tk.Button(frameBoutons, text="Tirer", font=("Arial", 16), bg="#4CAF50", fg="white", padx=10, pady=5, command=choisir_tirer)
 bouton_tirer.place(relx=0.45, rely=0.3, anchor="center")  # Centré verticalement et à gauche
 
 # Création du bouton rester (dans frameBoutons)
-bouton_rester = tk.Button(frameBoutons, text="Rester", font=("Arial", 16), bg="#f44336", fg="white", padx=10, pady=5)
+bouton_rester = tk.Button(frameBoutons, text="Rester", font=("Arial", 16), bg="#f44336", fg="white", padx=10, pady=5, command=choisir_rester)
 bouton_rester.place(relx=0.55, rely=0.3, anchor="center")  # Centré verticalement et à droite
 
 # Frame pour afficher le score du joueur
@@ -96,10 +104,10 @@ couleur, symbole, chiffre = ac.determinerCouleurSymbole("Pique", "J")
 #-------------------------------------------------------------- Cartes du dealer --------------------------------------------------------------#
 
 # Outline de la 1ere carte dealer
-def premiere_carte_dealer(chiffre,couleur,symbole):
+def carte_dealer(numero_carte, chiffre,couleur,symbole):
 
     carte1 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="white", highlightthickness=2, highlightbackground="black")
-    carte1.place(x=50, y=50)
+    carte1.place(x=50 * numero_carte, y=50)
 
     # Texte en haut à gauche
     carte1.create_text(20, 20, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="nw")
@@ -107,6 +115,7 @@ def premiere_carte_dealer(chiffre,couleur,symbole):
     carte1.create_text(180, 280, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="se")
     carte1.create_text(180, 255, text=symbole, font=("Arial", 20), fill=couleur, anchor="se")
     carte1.create_text(100, 150, text=symbole, font=("Arial", 60), fill=couleur)
+
 
 # Outline de la 2eme carte dealer, face cachée
 carte2 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
@@ -130,15 +139,19 @@ carte4.place(x=200, y=50)
 carte4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 #-------------------------------------------------------------- Cartes du joueur --------------------------------------------------------------#
-# Outline de la 1ere carte joueur
-carteJ1 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="white", highlightthickness=2, highlightbackground="black")
-carteJ1.place(x=50, y=5)
-# Texte en haut à gauche
-carteJ1.create_text(20, 20, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="nw")
-carteJ1.create_text(20, 45, text=symbole, font=("Arial", 20), fill=couleur, anchor="nw")
-carteJ1.create_text(180, 280, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="se")
-carteJ1.create_text(180, 255, text=symbole, font=("Arial", 20), fill=couleur, anchor="se")
-carteJ1.create_text(100, 150, text=symbole, font=("Arial", 60), fill=couleur)
+
+def carte_joueur(numero_carte, chiffre, couleur, symbole):
+
+    carteJ1 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="white", highlightthickness=2, highlightbackground="black")
+    carteJ1.place(x=50 * numero_carte, y=5)
+
+    # Texte en haut à gauche
+    carteJ1.create_text(20, 20, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="nw")
+    carteJ1.create_text(20, 45, text=symbole, font=("Arial", 20), fill=couleur, anchor="nw")
+    carteJ1.create_text(180, 280, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="se")
+    carteJ1.create_text(180, 255, text=symbole, font=("Arial", 20), fill=couleur, anchor="se")
+    carteJ1.create_text(100, 150, text=symbole, font=("Arial", 60), fill=couleur)
+
 
 # Outline de la 2eme carte dealer, face cachée
 carteJ2 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
@@ -170,5 +183,5 @@ carteJ4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
 
 # Lancement de la boucle principale de la fenêtre
-#fenetre.mainloop()
+fenetre.mainloop()
 

@@ -34,6 +34,15 @@ class Cartes:
             return "red"
         else:
             return "black"
+        
+    def getSymboleAffichage(self):
+        symboles_affichage = {
+            "Coeur": "♥",
+            "Carreau": "♦",
+            "Pique": "♠",
+            "Trefle": "♣"
+        }
+        return symboles_affichage.get(self.__symbole, "")
 
     # Affichage pour représenter une carte
     def __repr__(self):
@@ -149,14 +158,6 @@ class Joueur(Acteur):
             return str(self.main[1])
         return "Aucune carte"
 
-    # Méthode pour choisir une action (tirer ou rester)
-    def choisir_action(self):
-        while True:
-            action = input(f"{self.nom}, 'tirer' une carte ou 'rester'? ").lower()
-            if action in ['tirer', 'rester']:
-                return action
-            else:
-                print("Action invalide: 'tirer' ou 'rester'.")
 
     # Méthode pour afficher la main du joueur
     def afficher_main(self):
@@ -217,13 +218,29 @@ def calculer_score(main):
 def tour_joueur(joueur, deck):
     # Tour d'un joueur à la fois
     while calculer_score(joueur.main) < 21:
-        print(f"\nMain de {joueur.nom}: {joueur.afficher_main()} (Score: {calculer_score(joueur.main)})")
-        action = joueur.choisir_action()
+        #print(f"\nMain de {joueur.nom}: {joueur.afficher_main()} (Score: {calculer_score(joueur.main)})")
+        action = pg.choix_joueur.get()
         if action == "tirer":
             # Fonction pop() pour retirer du deck la carte piochée
             joueur.ajouter_carte(deck.pop())
+
+            # Affichage de la carte piochée
+            carte_piochée : Cartes = joueur.main[-1]
+            chiffre = carte_piochée.getChiffre()
+            symbole = carte_piochée.getSymboleAffichage()
+            couleur = carte_piochée.getCouleur()
+            chiffre_var = tk.StringVar()
+            symbole_var = tk.StringVar()
+            couleur_var = tk.StringVar()
+            chiffre_var.set(chiffre)
+            symbole_var.set(symbole)
+            couleur_var.set(couleur)
+
+            pg.carte_joueur(len(joueur.main), chiffre, couleur, symbole)
         else:
             break
+    
+    
 
 # Fonction pour gérer le tour du croupier
 def tour_croupier(croupier, deck):
@@ -234,6 +251,8 @@ def tour_croupier(croupier, deck):
         print(f"Croupier tire et obtient (Score: {calculer_score(croupier.main)})")
     print(f"Main du croupier (révélée): {croupier.afficher_main(reveal=True)} "
           f"(Score: {calculer_score(croupier.main)})")
+
+
 
 # Fonction pour gérer les tours entre joueur et croupier
 def gerer_les_tours():
@@ -250,16 +269,87 @@ def gerer_les_tours():
         joueur.ajouter_carte(deck.pop())
         croupier.ajouter_carte(deck.pop())
 
-    # Afficher les mains initiales
-    #print("\n*** MAINS INITIALES ***")
-    #print(f"{joueur.nom}: {joueur.afficher_main()} (Score: {calculer_score(joueur.main)})")
-    #print(f"Croupier: {croupier.afficher_main(reveal=False)}")
+    # Affichage de la première carte du joueur
+    premiere_carte_joueur : Cartes = joueur.main[0]
+
+    # Récupérer le chiffre et le symbole
+    chiffre = premiere_carte_joueur.getChiffre()
+    symbole = premiere_carte_joueur.getSymboleAffichage()
+    couleur = premiere_carte_joueur.getCouleur()
+
+    # Mettre dans des variables Tkinter
+    chiffre_var = tk.StringVar()
+    symbole_var = tk.StringVar()
+    couleur_var = tk.StringVar()
+    chiffre_var.set(chiffre)
+    symbole_var.set(symbole)
+    couleur_var.set(couleur)
+
+    pg.carte_joueur(1, chiffre, couleur, symbole)
+
+    #Affichage de la deuxième carte du joueur
+    deuxieme_carte_joueur : Cartes = joueur.main[1]
+
+    # Récupérer le chiffre et le symbole
+    chiffre = deuxieme_carte_joueur.getChiffre()
+    symbole = deuxieme_carte_joueur.getSymboleAffichage()
+    couleur = deuxieme_carte_joueur.getCouleur()
+
+    # Mettre dans des variables Tkinter
+    chiffre_var = tk.StringVar()
+    symbole_var = tk.StringVar()
+    couleur_var = tk.StringVar()
+    chiffre_var.set(chiffre)
+    symbole_var.set(symbole)
+    couleur_var.set(couleur)
+
+    pg.carte_joueur(2, chiffre, couleur, symbole)
+
+
+
 
     # Tour du joueur
-    #tour_joueur(joueur, deck)
+    tour_joueur(joueur, deck)
+
+    # Affichage de la première carte du croupier
+    # Récupérer la première carte
+    premiere_carte_croupier : Cartes = croupier.main[0]
+
+    # Récupérer le chiffre et le symbole
+    chiffre = premiere_carte_croupier.getChiffre()
+    symbole = premiere_carte_croupier.getSymboleAffichage()
+    couleur = premiere_carte_croupier.getCouleur()
+
+    # Mettre dans des variables Tkinter
+    chiffre_var = tk.StringVar()
+    symbole_var = tk.StringVar()
+    couleur_var = tk.StringVar()
+    chiffre_var.set(chiffre)
+    symbole_var.set(symbole)
+    couleur_var.set(couleur)
+
+    pg.carte_dealer(1, chiffre, couleur, symbole)
 
     # Tour du croupier
     #tour_croupier(croupier, deck)
+
+    # Affichage de la 2e carte du croupier
+    deuxieme_carte_croupier : Cartes = croupier.main[1]
+
+    # Récupérer le chiffre et le symbole
+    chiffre = deuxieme_carte_croupier.getChiffre()
+    symbole = deuxieme_carte_croupier.getSymboleAffichage()
+    couleur = deuxieme_carte_croupier.getCouleur()
+
+    # Mettre dans des variables Tkinter
+    chiffre2_var = tk.StringVar()
+    symbole2_var = tk.StringVar()
+    couleur2_var = tk.StringVar()
+    chiffre2_var.set(chiffre)
+    symbole2_var.set(symbole)
+    couleur2_var.set(couleur)
+
+    pg.carte_dealer(2, chiffre, couleur, symbole)
 
     # Résultats
     #print("\n*** RÉSULTATS ***")
@@ -275,28 +365,29 @@ def gerer_les_tours():
     #    verdict = "égalité (push)"
     #print(f"{joueur.nom}: {joueur.afficher_main()} --> {score_joueur} | {verdict}")
 
-    # Récupérer la première carte
-    premiere_carte_croupier : Cartes = croupier.main[0]
+
+
+    deuxieme_carte_croupier : Cartes = croupier.main[1]
 
     # Récupérer le chiffre et le symbole
-    chiffre = premiere_carte_croupier.getChiffre()
-    symbole = premiere_carte_croupier.getSymbole()
-    couleur = premiere_carte_croupier.getCouleur()
+    chiffre = deuxieme_carte_croupier.getChiffre()
+    symbole = deuxieme_carte_croupier.getSymboleAffichage()
+    couleur = deuxieme_carte_croupier.getCouleur()
 
     # Mettre dans des variables Tkinter
-    chiffre_var = tk.StringVar()
-    symbole_var = tk.StringVar()
-    couleur_var = tk.StringVar()
-    chiffre_var.set(chiffre)
-    symbole_var.set(symbole)
-    couleur_var.set(couleur)
+    chiffre2_var = tk.StringVar()
+    symbole2_var = tk.StringVar()
+    couleur2_var = tk.StringVar()
+    chiffre2_var.set(chiffre)
+    symbole2_var.set(symbole)
+    couleur2_var.set(couleur)
 
-    pg.premiere_carte_dealer(chiffre, couleur, symbole)
+    pg.carte_dealer(2, chiffre, couleur, symbole)
 
 if __name__ == "__main__":
     # Mainloop de la fenêtre Tkinter
-    pg.fenetre.mainloop()
     gerer_les_tours()
+    pg.fenetre.mainloop()
 
     # Affichage de la première carte du joueur
     # print(joueur.afficher_premier_carte())  # joueur est maintenant local à gerer_les_tours
