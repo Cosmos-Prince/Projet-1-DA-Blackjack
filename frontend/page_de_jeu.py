@@ -1,6 +1,6 @@
 import tkinter as tk
 import affichageCartes as ac
-from tkinter import PhotoImage
+import BackEnd_BJ_Marilou as be
 
 # Initialisation de la fenêtre
 fenetre = tk.Tk()
@@ -96,15 +96,17 @@ couleur, symbole, chiffre = ac.determinerCouleurSymbole("Pique", "J")
 #-------------------------------------------------------------- Cartes du dealer --------------------------------------------------------------#
 
 # Outline de la 1ere carte dealer
-carte1 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="white", highlightthickness=2, highlightbackground="black")
-carte1.place(x=50, y=50)
+def premiere_carte_dealer(chiffre,couleur,symbole):
 
-# Texte en haut à gauche
-carte1.create_text(20, 20, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="nw")
-carte1.create_text(20, 45, text=symbole, font=("Arial", 20), fill=couleur, anchor="nw")
-carte1.create_text(180, 280, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="se")
-carte1.create_text(180, 255, text=symbole, font=("Arial", 20), fill=couleur, anchor="se")
-carte1.create_text(100, 150, text=symbole, font=("Arial", 60), fill=couleur)
+    carte1 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="white", highlightthickness=2, highlightbackground="black")
+    carte1.place(x=50, y=50)
+
+    # Texte en haut à gauche
+    carte1.create_text(20, 20, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="nw")
+    carte1.create_text(20, 45, text=symbole, font=("Arial", 20), fill=couleur, anchor="nw")
+    carte1.create_text(180, 280, text=chiffre, font=("Arial", 20, "bold"), fill=couleur, anchor="se")
+    carte1.create_text(180, 255, text=symbole, font=("Arial", 20), fill=couleur, anchor="se")
+    carte1.create_text(100, 150, text=symbole, font=("Arial", 60), fill=couleur)
 
 # Outline de la 2eme carte dealer, face cachée
 carte2 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
@@ -159,17 +161,14 @@ carteJ4.place(x=200, y=5)
 # Optionnel : ajouter du texte ou un symbole sur la 4ème carte
 carteJ4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
 
-#-------------------------------------------------------------- Jetons --------------------------------------------------------------#
-frameJetons = tk.Frame(frameDealer, bg="#ffff00", padx=20, pady=20, height=400, width=700)
-frameJetons.place(relx=0.642, y=0) # <-- Modifié pour être plus à droite
+#------------------------------------------------------------- Début de l'intégration du BackEnd --------------------------------------------------------------#
 
-image = PhotoImage(file="frontend/jetons.png")
-label_image = tk.Label(frameJetons, image=image)
-label_image.image = image  # Nécessaire pour éviter que l'image soit supprimée par le garbage collector
-label_image.place(x=100, y=100)
+# Démarrer le jeu en appelant la fonction du backend
+#be.demarrer_jeu()
+
+# Affichage de la première carte du joueur
 
 
-
-
-fenetre.mainloop()
+# Lancement de la boucle principale de la fenêtre
+#fenetre.mainloop()
 

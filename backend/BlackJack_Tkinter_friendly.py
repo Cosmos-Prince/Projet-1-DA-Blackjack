@@ -2,7 +2,6 @@
 # CRÉATION DE LA CLASSE CARTES
 #=============================
 
-# Le module random est importé pour mélanger le deck
 import random
 
 class Cartes:
@@ -34,7 +33,6 @@ class Cartes:
     # Création d'un deck de 52 cartes (statique)
     @staticmethod
     def creer_deck():
-        # Rassemble toutes les cartes déjà créées
         toutes_les_cartes = [
             HA, H2, H3, H4, H5, H6, H7, H8, H9, H10, HJ, HQ, HK,
             DA, D2, D3, D4, D5, D6, D7, D8, D9, D10, DJ, DQ, DK,
@@ -131,14 +129,21 @@ class Joueur(Acteur):
     def __init__(self, nom):
         super().__init__(nom)
 
-    # Méthode pour choisir une action (tirer ou rester)
-    def choisir_action(self):
-        while True:
-            action = input(f"{self.nom}, 'tirer' une carte ou 'rester'? ").lower()
-            if action in ['tirer', 'rester']:
-                return action
-            else:
-                print("Action invalide: 'tirer' ou 'rester'.")
+    # Méthode pour choisir une action : injectée (GUI) ou console
+    # - input_action_func: callable(joueur: Joueur, score_actuel: int) -> str ("tirer" ou "rester")
+    def choisir_action(self, score_actuel, input_action_func=None, output_func=print):
+        if input_action_func is None:
+            # Mode console (comportement original)
+            while True:
+                action = input(f"{self.nom}, 'tirer' une carte ou 'rester'? ").lower()
+                if action in ['tirer', 'rester']:
+                    return action
+                else:
+                    output_func("Action invalide: 'tirer' ou 'rester'.")
+        else:
+            # Mode GUI (ou autre) via callback
+            action = input_action_func(self, score_actuel)
+            return action
 
     # Méthode pour afficher la main du joueur
     def afficher_main(self):
@@ -162,27 +167,29 @@ class Croupier(Acteur):
 
 
 #############################################################################################################
-# FONCTION POUR DEMANDER LE NOMBRE DE JOUEURS (1-3) --> À MODIFIER DANS TKINTER (PAS D'INPUT/PRINT)
+# FONCTION POUR DEMANDER LE NOMBRE DE JOUEURS
+#  - input_nb_joueurs_func: callable() -> int (1..3) ; si None, mode console.
 #==================================================================================================
 
-def demander_nb_joueurs():
+def demander_nb_joueurs(input_nb_joueurs_func=None, output_func=print):
+    if input_nb_joueurs_func is not None:
+        nb = int(input_nb_joueurs_func())
+        return max(1, min(3, nb))
     while True:
         try:
             nb = int(input("Combien de joueurs (1-3)? "))
             if 1 <= nb <= 3:
                 return nb
             else:
-                print("Veuillez entrer un nombre entre 1 et 3.")
+                output_func("Veuillez entrer un nombre entre 1 et 3.")
         except ValueError:
-            print("Entrée invalide : Veuillez entrer un nombre entier.")
-
+            output_func("Entrée invalide : Veuillez entrer un nombre entier.")
 
 
 ##############################################################################################################
 # FONCTION POUR CALCULER LE SCORE D'UNE MAIN
 #===========================================
 
-# Calcul du score
 def calculer_score(main):
     total = sum(carte.getValeur() for carte in main)
     nb_as = sum(1 for carte in main if carte.getChiffre() == "A")
@@ -196,59 +203,52 @@ def calculer_score(main):
 # GESTION DU JEU (TOURS DES JOUEURS ET DU CROUPIER)
 #==================================================
 
-# Fonction pour gérer les tours des joueurs
-def tour_joueur(joueur, deck):
+def tour_joueur(joueur, deck, input_action_func=None, output_func=print):
     # Tour d'un joueur à la fois
     while calculer_score(joueur.main) < 21:
-        print(f"\nMain de {joueur.nom}: {joueur.afficher_main()} (Score: {calculer_score(joueur.main)})")
-        action = joueur.choisir_action()
+        score = calculer_score(joueur.main)
+        output_func(f"\nMain de {joueur.nom}: {joueur.afficher_main()} (Score: {score})")
+        action = joueur.choisir_action(score, input_action_func=input_action_func, output_func=output_func)
         if action == "tirer":
-            # Fonction pop() pour retirer du deck la carte piochée
             joueur.ajouter_carte(deck.pop())
         else:
             break
 
-# Fonction pour gérer le tour du croupier
-def tour_croupier(croupier, deck):
-    print(f"\nMain du croupier (cachée): {croupier.afficher_main(reveal=False)}")
+def tour_croupier(croupier, deck, output_func=print):
+    output_func(f"\nMain du croupier (cachée): {croupier.afficher_main(reveal=False)}")
     while calculer_score(croupier.main) < 17:
-        # Fonction pop() pour retirer du deck la carte piochée
         croupier.ajouter_carte(deck.pop())
-        print(f"Croupier tire et obtient (Score: {calculer_score(croupier.main)})")
-    print(f"Main du croupier (révélée): {croupier.afficher_main(reveal=True)} "
-          f"(Score: {calculer_score(croupier.main)})")
+        output_func(f"Croupier tire et obtient (Score: {calculer_score(croupier.main)})")
+    output_func(f"Main du croupier (révélée): {croupier.afficher_main(reveal=True)} "
+                f"(Score: {calculer_score(croupier.main)})")
 
-# Fonction pour gérer les tours entre joueurs et croupier
-def gerer_les_tours():
+def gerer_les_tours(input_nb_joueurs_func=None, input_action_func=None, output_func=print):
     deck = Cartes.creer_deck()
-    nb = demander_nb_joueurs()
+    nb = demander_nb_joueurs(input_nb_joueurs_func=input_nb_joueurs_func, output_func=output_func)
     joueurs = [Joueur(f"Joueur {i+1}") for i in range(nb)]
     croupier = Croupier()
 
     # Distribuer les cartes initiales (2 pour chacun)
-
-    # Le _ sert à ignorer la valeur de la variable (2)
     for _ in range(2):
         for joueur in joueurs:
-            # Fonction pop() pour retirer du deck la carte piochée
             joueur.ajouter_carte(deck.pop())
         croupier.ajouter_carte(deck.pop())
 
     # Afficher les mains initiales
-    print("\n*** MAINS INITIALES ***")
+    output_func("\n*** MAINS INITIALES ***")
     for joueur in joueurs:
-        print(f"{joueur.nom}: {joueur.afficher_main()} (Score: {calculer_score(joueur.main)})")
-    print(f"Croupier: {croupier.afficher_main(reveal=False)}")
+        output_func(f"{joueur.nom}: {joueur.afficher_main()} (Score: {calculer_score(joueur.main)})")
+    output_func(f"Croupier: {croupier.afficher_main(reveal=False)}")
 
     # Tours des joueurs
     for joueur in joueurs:
-        tour_joueur(joueur, deck)
+        tour_joueur(joueur, deck, input_action_func=input_action_func, output_func=output_func)
 
     # Tour du croupier
-    tour_croupier(croupier, deck)
+    tour_croupier(croupier, deck, output_func=output_func)
 
     # Résultats
-    print("\n*** RÉSULTATS ***")
+    output_func("\n*** RÉSULTATS ***")
     score_croupier = calculer_score(croupier.main)
     for joueur in joueurs:
         score_joueur = calculer_score(joueur.main)
@@ -260,14 +260,89 @@ def gerer_les_tours():
             verdict = "perdu"
         else:
             verdict = "égalité (push)"
-        print(f"{joueur.nom}: {joueur.afficher_main()} --> {score_joueur} | {verdict}")
+        output_func(f"{joueur.nom}: {joueur.afficher_main()} --> {score_joueur} | {verdict}")
 
+##############################################################################################
+# FONCTION QUI RETOURNE LA PREMIÈRE CARTE DU JOUEUR
+def get_premiere_carte(joueur: Joueur):
+    if joueur.main:
+        return joueur.main[0]
+    return None
 
 ##############################################################################################################
-# POUR LANCER LE JEU (TEST)
+# FRONT-END TKINTER MINIMAL (optionnel)
+# - utilise simpledialog pour les entrées et un Text pour l'affichage
 #==========================
 
-# if __name__ == "__main__": sert à déclencher le jeu
 if __name__ == "__main__":
-    gerer_les_tours()
+    try:
+        import tkinter as tk
+        from tkinter import simpledialog, messagebox
 
+        class BlackjackApp(tk.Tk):
+            def __init__(self):
+                super().__init__()
+                self.title("Black Jack (GUI minimal)")
+                self.geometry("700x500")
+
+                self.txt = tk.Text(self, wrap="word")
+                self.txt.pack(fill="both", expand=True)
+
+                self.btn_frame = tk.Frame(self)
+                self.btn_frame.pack(fill="x")
+
+                self.btn_start = tk.Button(self.btn_frame, text="Démarrer une partie", command=self.start_game)
+                self.btn_start.pack(side="left", padx=5, pady=5)
+
+                # variable où l’action choisie sera déposée par askstring
+                self._last_action = None
+
+            def gui_log(self, msg):
+                self.txt.insert("end", msg + "\n")
+                self.txt.see("end")
+                self.update_idletasks()
+
+            def ask_nb_joueurs(self):
+                nb = simpledialog.askinteger("Joueurs", "Combien de joueurs (1-3) ?", minvalue=1, maxvalue=3, parent=self)
+                if nb is None:
+                    # Annulation -> par défaut 1
+                    nb = 1
+                return nb
+
+            def ask_action(self, joueur: Joueur, score_actuel: int):
+                # Dialogue modal: l’utilisateur tape 'tirer' ou 'rester'
+                while True:
+                    action = simpledialog.askstring(
+                        "Action",
+                        f"{joueur.nom} (score {score_actuel}) : taper 'tirer' ou 'rester'",
+                        parent=self
+                    )
+                    if action is None:
+                        # Si annule, on considère 'rester'
+                        return "rester"
+                    action = action.strip().lower()
+                    if action in ("tirer", "rester"):
+                        return action
+                    messagebox.showinfo("Info", "Veuillez entrer 'tirer' ou 'rester'.")
+
+            def start_game(self):
+                self.txt.delete("1.0", "end")
+                try:
+                    gerer_les_tours(
+                        input_nb_joueurs_func=self.ask_nb_joueurs,
+                        input_action_func=self.ask_action,
+                        output_func=self.gui_log
+                    )
+                except Exception as e:
+                    messagebox.showerror("Erreur", str(e))
+
+        app = BlackjackApp()
+        app.mainloop()
+
+    except Exception:
+        # Si Tkinter n’est pas dispo ou si on veut rester en console, on garde le comportement original.
+        gerer_les_tours()
+
+def demarrer_jeu():
+    if __name__ == "__main__":
+        gerer_les_tours()
