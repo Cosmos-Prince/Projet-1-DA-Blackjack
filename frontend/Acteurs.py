@@ -10,21 +10,19 @@ class Acteur:
         self.main = []
         self.__score = 0
 
-
     # Méthode pour ajouter une carte à la main
     def ajouter_carte(self, carte):
         self.main.append(carte)
         self.calculer_score()
 
-
+    # Méthode pour obtenir le score actuel
     def getScore(self):
         return self.__score
-
 
     # Calcul du score
     def calculer_score(self):
         total = sum(carte.getValeur() for carte in self.main)
-        nb_as = sum(1 for carte in self.main if carte.getSymbole() == "A")
+        nb_as = sum(1 for carte in self.main if carte.getChiffre() == "A")
         # Convertir des As de 11 à 1 tant que ça dépasse 21
         while total > 21 and nb_as > 0:
             total -= 10

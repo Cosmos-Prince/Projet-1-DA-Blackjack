@@ -55,3 +55,66 @@ pg = None  # Sera passé dynamiquement par le frontend
     # Affichage de la première carte du joueur
     # print(joueur.afficher_premier_carte())  # joueur est maintenant local à gerer_les_tours
 
+
+
+
+
+'''
+ÉTAIT DANS PAGE DE JEU MAIS JSP SI NÉCESSAIRE
+
+choix_joueur = tk.StringVar(value="")  # Variable pour stocker le choix
+
+    
+-------------------------------------------------------------- Cartes du dealer --------------------------------------------------------------#
+
+# Outline de la 1ere carte dealer
+
+
+# Outline de la 2eme carte dealer, face cachée
+carte2 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+carte2.place(x=100, y=50)
+
+# Optionnel : ajouter du texte ou un symbole sur la 2ème carte
+carte2.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+
+# Outline de la 3ème carte dealer, superposée
+carte3 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+carte3.place(x=150, y=50)  # Ajuste x et y pour la position voulue
+
+# Optionnel : ajouter du texte ou un symbole sur la 3ème carte
+carte3.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+
+# Outline de la 4eme carte dealer
+carte4 = tk.Canvas(frameCartesDealer, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+carte4.place(x=200, y=50)
+
+# Optionnel : ajouter du texte ou un symbole sur la 4ème carte
+carte4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+
+#-------------------------------------------------------------- Cartes du joueur --------------------------------------------------------------#
+
+
+
+
+
+# Outline de la 2eme carte dealer, face cachée
+carteJ2 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+carteJ2.place(x=100, y=5)
+
+# Optionnel : ajouter du texte ou un symbole sur la 2ème carte
+carteJ2.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+
+# Outline de la 3ème carte dealer, superposée
+carteJ3 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+carteJ3.place(x=150, y=5)  # Ajuste x et y pour la position voulue
+
+# Optionnel : ajouter du texte ou un symbole sur la 3ème carte
+carteJ3.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+
+# Outline de la 4eme carte dealer
+carteJ4 = tk.Canvas(frameCartesJoueur, width=200, height=300, bg="yellow", highlightthickness=2, highlightbackground="black")
+carteJ4.place(x=200, y=5)
+
+# Optionnel : ajouter du texte ou un symbole sur la 4ème carte
+carteJ4.create_text(100, 150, text="?", font=("Arial", 60), fill="black")
+'''

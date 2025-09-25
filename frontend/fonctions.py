@@ -24,3 +24,27 @@ def afficherCarte(carte:Cartes):
     chiffre_var.set(carte.getChiffre())
     symbole_var.set(carte.getSymboleAffichage())
     couleur_var.set(carte.getCouleur())
+
+
+'''
+*** AJOUT ***
+'''
+# Fonction pour vérifier si un acteur (joueur ou croupier) est bust (dépasse 21) --> pourrait être dans Acteurs.py comme une méthode
+
+def acteur_est_bust(acteur: Acteur) -> bool:
+    # retourne vrai si le score est supérieur à 21
+    return acteur.getScore() > 21
+
+'''
+*** AJOUT ***
+'''
+# Fonction pour le tour du croupier (sert à vérifier si le croupier doit piocher)
+def tour_croupier(croupier: Croupier, deck: list[Cartes], score_minimum: int = 17) -> None:
+    # Le croupier pioche jusqu'à atteindre score_minimum (17) et ne dépasse pas 17.
+    while croupier.getScore() < score_minimum and deck:
+        croupier.ajouter_carte(deck.pop())
+
+
+# Code réutilisable pour updater le score d'un acteur (joueur ou croupier)
+def updateScore(label:tk.Label, acteur:Acteur):
+    label.config(text = f"Score : {acteur.getScore()}") #.config permets de changer une valeur sans re créer le label au complet
