@@ -1,6 +1,6 @@
 import tkinter as tk
 
-#effet sur boutton
+#effet sur boutto
 def bouton_personnalise(parent, text, command=None, bg="#ffffff", fg="#000000", hover_bg='green'):
     #effet de petite couleur quand tu clique desuss
     def on_enter(e):
