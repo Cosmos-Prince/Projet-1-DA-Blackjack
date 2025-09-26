@@ -8,6 +8,8 @@ from Acteurs import *
 '''
 *** MODIFICATIONS DE LA FONCTION CARTE_JOUEUR CAR DES AJOUTS ONT ÉTÉ APPORTÉS DANS AFFICHAGECARTES.PY ***
 '''
+
+
 # Affichage d'une carte dans le frame des cartes pour le joueur 
 def carte_joueur(numero_carte: int, carte: Cartes):
     affichageCarte(frameCartesJoueur, carte, x=50*(numero_carte-1))
@@ -18,7 +20,7 @@ def carte_joueur(numero_carte: int, carte: Cartes):
 # Logique lorsque le boutton "hit" est appuyé
 def choisir_tirer():
 
-    global deck, Player1 # Utilisation des variables globales pour accéder au deck et au joueur
+    global deck, Player1, scoreTotalDealer, Dealer # Utilisation des variables globales pour accéder au deck et au joueur
     Player1.ajouter_carte(deck.pop())  # Ajoute une carte à la main du joueur
     carte_joueur(len(Player1.main), Player1.main[-1])  # Affiche la carte à la dernière position de la main
     updateScoreJoueur()    # Met à jour le score du joueur
@@ -26,7 +28,7 @@ def choisir_tirer():
     # vérification si le joueur a dépassé 21 (réutilisable aussi pour le dealer)
     if acteur_est_bust(Player1): # Utilise la fonction de fonctions.py
         tour_label.config(text="Vous avez dépassé 21 (Bust). Manche terminée.")
-
+        scoreTotalDealer = scoreTotal(scoreTotalDealerLabel, Dealer, scoreTotalDealer)
         #Unpack les bouttons qui permettent de tirer et de rester
         bouton_tirer.config(state="disabled")
         bouton_rester.config(state="disabled")
@@ -41,7 +43,7 @@ def choisir_rester():
     bouton_tirer.config(state="disabled")
     bouton_rester.config(state="disabled")
 
-    global deck, Dealer # Utilisation des variables globales pour accéder au deck et au croupier
+    global deck, Dealer, scoreTotalJoueur, scoreTotalDealer # Utilisation des variables globales pour accéder au deck et au croupier
 
     # si le croupier n’a pas encore de cartes visibles, on lui en met 2
     if len(Dealer.main) == 0: # Vérifie si le croupier a des cartes
@@ -77,10 +79,14 @@ def choisir_rester():
     score_dealer = Dealer.getScore() # Récupère le score du croupier
     if acteur_est_bust(Dealer): # fonction de fonctions.py
         verdict = "Vous avez gagné !"  # dealer bust
+        scoreTotalJoueur = scoreTotal(scoreTotalJoueurLabel, Player1, scoreTotalJoueur)
     elif score_joueur > score_dealer:
         verdict = "Vous avez gagné !"
+        scoreTotalJoueur = scoreTotal(scoreTotalJoueurLabel, Player1, scoreTotalJoueur)
+
     elif score_joueur < score_dealer:
         verdict = "Vous avez perdu"
+        scoreTotalDealer = scoreTotal(scoreTotalDealerLabel, Dealer, scoreTotalDealer)
     else:
         verdict = "Égalité (push)"
     tour_label.config(text=f"Résultat — Joueur: {score_joueur} | Croupier: {score_dealer} → {verdict}")
@@ -170,7 +176,8 @@ deck:list = creer_deck()
 Player1:Joueur = Joueur("Joueur 1")
 Dealer:Croupier = Croupier()
 dealer_carte_cachee = None  # Variable pour stocker la carte face cachée du dealer
-
+scoreTotalDealer = 0
+scoreTotalJoueur = 0
 
 # Initialisation de la fenêtre
 fenetre = tk.Tk()
@@ -180,6 +187,7 @@ fenetre.title("Black Jack")
 largeur= fenetre.winfo_screenwidth()               
 hauteur= fenetre.winfo_screenheight()
 fenetre.geometry("%dx%d" %(largeur, hauteur))
+print(largeur, hauteur)
 
 '''
 =====================================

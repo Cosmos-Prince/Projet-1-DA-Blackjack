@@ -48,3 +48,9 @@ def tour_croupier(croupier: Croupier, deck: list[Cartes], score_minimum: int = 1
 # Code réutilisable pour updater le score d'un acteur (joueur ou croupier)
 def updateScore(label:tk.Label, acteur:Acteur):
     label.config(text = f"Score : {acteur.getScore()}") #.config permets de changer une valeur sans re créer le label au complet
+
+
+def scoreTotal(label:tk.Label, acteur:Acteur, score:int):
+    score += 1
+    label.config(text = f"Victoires totales {acteur.nom} : {score}")
+    return score
