@@ -17,6 +17,7 @@ def carte_joueur(numero_carte: int, carte: Cartes):
 '''
 # Logique lorsque le boutton "hit" est appuyé
 def choisir_tirer():
+
     global deck, Player1 # Utilisation des variables globales pour accéder au deck et au joueur
     Player1.ajouter_carte(deck.pop())  # Ajoute une carte à la main du joueur
     carte_joueur(len(Player1.main), Player1.main[-1])  # Affiche la carte à la dernière position de la main
@@ -26,12 +27,20 @@ def choisir_tirer():
     if acteur_est_bust(Player1): # Utilise la fonction de fonctions.py
         tour_label.config(text="Vous avez dépassé 21 (Bust). Manche terminée.")
 
+        #Unpack les bouttons qui permettent de tirer et de rester
+        bouton_tirer.config(state="disabled")
+        bouton_rester.config(state="disabled")
+
 
 '''
 *** MODIFICATIONS DE CHOISIR_RESTER() ***
 '''
 # Logique lorsque le boutton "stay" est appuyé
 def choisir_rester():
+    #Unpack les boutons qui permettent de tirer et rester
+    bouton_tirer.config(state="disabled")
+    bouton_rester.config(state="disabled")
+
     global deck, Dealer # Utilisation des variables globales pour accéder au deck et au croupier
 
     # si le croupier n’a pas encore de cartes visibles, on lui en met 2
@@ -82,6 +91,11 @@ def choisir_rester():
 '''
 # Fonction pour démarrer une nouvelle partie
 def nouvelle_partie():
+    #Pack les boutons
+    bouton_rester.config(state="normal")
+    bouton_tirer.config(state="normal")
+
+
     global deck, Player1, Dealer # Utilisation des variables globales pour accéder au deck et aux acteurs
 
     # Réinitialiser deck et acteurs
@@ -117,6 +131,10 @@ def nouvelle_partie():
     Player1.ajouter_carte(deck.pop())
     carte_joueur(2, Player1.main[1])
     updateScoreJoueur()
+
+    # Vérifie si le joueur a blackjack et le fait rester automatiquement si c'est le cas
+    if Player1.getScore() == 21:
+        choisir_rester()
 
 
 #Utilise la fonction ci haut pour updater avec des variables globales
